@@ -304,11 +304,11 @@
         .no-tasks-message {font-size:1.1rem;
                            color:var(--gray-color7);}
 
-        > span {display:block;
+        > div {display:block;
                 padding:1rem;
                 background-color:var(--white);}
 
-        > span:not(:last-child) {margin-bottom:1rem;}
+        > div:not(:last-child) {margin-bottom:1rem;}
 
         .task-box .delete {float:right;
                            padding:0.2rem 0.9rem;
@@ -317,7 +317,9 @@
                            border-radius:0.3rem;
                            color:var(--white);
                            background-color:var(--primary-color2);
-                           cursor:pointer;}
+                           cursor:pointer;
+                           border:none;
+                           outline:none;}
 
         .task-box.finished {text-decoration:line-through;}
     }

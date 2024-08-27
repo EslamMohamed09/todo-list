@@ -1,5 +1,5 @@
-let theInput = document.querySelector(".add-task input");
-    theAddButton = document.querySelector(".add-task .plus");
+let theInput = document.querySelector(".todo-container .add-task input");
+    theAddButton = document.querySelector(".todo-container .add-task .plus");
     tasksContainer = document.querySelector(".tasks-content");
     noTasksMsg = document.querySelector(".no-tasks-message");
     tasksCount = document.querySelector(".tasks-count span");
@@ -19,28 +19,22 @@ theAddButton.onclick = function () {
 
       noTasksMsg.remove();
 
-      let mainSpan = document.createElement("span");
+      let listItem = document.createElement("div");
+          listItem.className = 'task-box';
 
-      let deleteElement = document.createElement("span");
+      let inputValue = document.createTextNode(theInput.value);
+      listItem.appendChild(inputValue);
 
-      let text = document.createTextNode(theInput.value);
+      let deleteButton = document.createElement("button");
+          deleteButton.className = 'delete';
+          deleteButton.textContent = 'Delete';
+      listItem.appendChild(deleteButton);
 
-      let deleteText = document.createTextNode("Delete");
+      tasksContainer.appendChild(listItem);
 
-      mainSpan.appendChild(text);
-
-      mainSpan.className = 'task-box';
-
-      deleteElement.appendChild(deleteText);
-
-      deleteElement.className = 'delete';
-
-      mainSpan.appendChild(deleteElement);
-
-      tasksContainer.appendChild(mainSpan);
+      tasksCount.textContent = tasksContainer.children.length;
 
       theInput.value = '';
-
       theInput.focus();
 
     }
@@ -51,6 +45,7 @@ document.addEventListener('click', function (e){
 
     if (e.target.className == 'delete'){
         e.target.parentNode.remove();
+        tasksCount.textContent = tasksContainer.children.length;
     }
 
     if (e.target.classList.contains('task-box')){

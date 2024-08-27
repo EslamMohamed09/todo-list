@@ -360,12 +360,12 @@ body {
   font-size: 1.1rem;
   color: var(--gray-color7);
 }
-.todo-container .tasks-content > span {
+.todo-container .tasks-content > div {
   display: block;
   padding: 1rem;
   background-color: var(--white);
 }
-.todo-container .tasks-content > span:not(:last-child) {
+.todo-container .tasks-content > div:not(:last-child) {
   margin-bottom: 1rem;
 }
 .todo-container .tasks-content .task-box .delete {
@@ -377,6 +377,8 @@ body {
   color: var(--white);
   background-color: var(--primary-color2);
   cursor: pointer;
+  border: none;
+  outline: none;
 }
 .todo-container .tasks-content .task-box.finished {
   text-decoration: line-through;

@@ -1,16 +1,21 @@
 let theInput = document.querySelector(".todo-container .add-task input");
     theAddButton = document.querySelector(".todo-container .add-task .plus");
-    tasksContainer = document.querySelector(".tasks-content");
-    noTasksMsg = document.querySelector(".no-tasks-message");
+    tasksContent = document.querySelector(".tasks-content");
     tasksCount = document.querySelector(".tasks-count span");
     tasksComplete = document.querySelector(".tasks-completed span");
+
+    let noTasksMsg = document.createElement("div");
+        noTasksMsg.classList.add("no-tasks-message");
+        noTasksMsg.textContent = 'no tasks to show';
+        if(tasksContent.children.length == 0){tasksContent.appendChild(noTasksMsg);}
+    
 
 window.onload = function () {
     theInput.focus();
     loadTasksFromLocalStorage();
 };
 
-theAddButton.onclick = function () {
+function addTask() {
 
     if(theInput.value === ''){
 
@@ -21,7 +26,7 @@ theAddButton.onclick = function () {
       noTasksMsg.remove();
 
       let listItem = document.createElement("div");
-          listItem.className = 'task-box';
+          listItem.className = 'task-item';
 
       let inputValue = document.createTextNode(theInput.value);
       listItem.appendChild(inputValue);
@@ -31,9 +36,9 @@ theAddButton.onclick = function () {
           deleteButton.textContent = 'Delete';
       listItem.appendChild(deleteButton);
 
-      tasksContainer.appendChild(listItem);
+      tasksContent.appendChild(listItem);
 
-      tasksCount.textContent = tasksContainer.children.length;
+      tasksCount.textContent = tasksContent.querySelectorAll('.task-item').length;
 
       saveTasksToLocalStorage();
 
@@ -44,16 +49,21 @@ theAddButton.onclick = function () {
 
 };
 
+theAddButton.onclick = addTask();
+theInput.addEventListener('keypress', function(e){
+    if (e.key === 'Enter'){
+        addTask();
+    }
+});
+
+
+
 document.addEventListener('click', function (e){
 
     if (e.target.className == 'delete'){
         e.target.parentNode.remove();
-        tasksCount.textContent = tasksContainer.children.length;
-        saveTasksToLocalStorage();
-    }
-
-    if (e.target.classList.contains('task-box')){
-        e.target.classList.toggle("finished");
+        tasksCount.textContent = tasksContent.querySelectorAll('.task-item').length;
+        if(tasksContent.querySelectorAll('.task-item').length === 0){tasksContent.appendChild(noTasksMsg);}
         saveTasksToLocalStorage();
     }
 
@@ -61,10 +71,9 @@ document.addEventListener('click', function (e){
 
 function saveTasksToLocalStorage() {
     let tasks = [];
-    document.querySelectorAll('.tasks-content .task-box').forEach(task => {
+    document.querySelectorAll('.tasks-content .task-item').forEach(task => {
         tasks.push({
             text: task.firstChild.textContent,
-            finished: task.classList.contains('finished')
         });
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -77,10 +86,8 @@ function loadTasksFromLocalStorage() {
     }
     tasks.forEach(task => {
         let listItem = document.createElement("div");
-        listItem.className = 'task-box';
-        if (task.finished) {
-            listItem.classList.add('finished');
-        }
+        listItem.className = 'task-item';
+        
         let inputValue = document.createTextNode(task.text);
         listItem.appendChild(inputValue);
 
@@ -89,7 +96,7 @@ function loadTasksFromLocalStorage() {
         deleteButton.textContent = 'Delete';
         listItem.appendChild(deleteButton);
 
-        tasksContainer.appendChild(listItem);
+        tasksContent.appendChild(listItem);
     });
-    tasksCount.textContent = tasksContainer.children.length;
+    tasksCount.textContent = tasksContent.querySelectorAll('.task-item').length;
 }

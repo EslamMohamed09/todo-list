@@ -310,7 +310,7 @@
 
         > div:not(:last-child) {margin-bottom:1rem;}
 
-        .task-box .delete {float:right;
+        .task-item .delete {float:right;
                            padding:0.2rem 0.9rem;
                            font-size:1.1rem;
                            font-weight:bold;
@@ -321,7 +321,7 @@
                            border:none;
                            outline:none;}
 
-        .task-box.finished {text-decoration:line-through;}
+        .task-item.finished {text-decoration:line-through;}
     }
     
 
